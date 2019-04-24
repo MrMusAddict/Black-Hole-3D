@@ -31,25 +31,13 @@ class BH {
     PVector force = new PVector(pos.x - p.pos.x, pos.y - p.pos.y, pos.z - p.pos.z);
     float r = force.mag();
     float fg = G * mass / (r * r);
+   
+    force.setMag(c).mult(fg * (dt / c)).mult(1/abs(1.0 - 2.0 * G * mass / (r * c * c)));
     
-    float fxTheta = acos(force.z/r);
-    float fxPhi = atan2(force.y, force.x);
-    
-    float deltaTheta = -fg * (dt / c) * sin(p.theta - fxTheta);
-    float deltaPhi = -fg * (dt / c) * sin(p.phi - fxPhi);
-    
-  
-    deltaTheta /= abs(1.0 - 2.0 * G * mass / (r * c * c));
-    deltaPhi /= abs(1.0 - 2.0 * G * mass / (r * c * c));
-    
-    p.theta += deltaTheta;
-    p.phi += deltaPhi;
-    
-    p.vel = new PVector(p.rad * sin(p.theta)*cos(p.phi), p.rad * sin(p.theta)*sin(p.phi), p.rad * cos(p.theta)).normalize().setMag(c);
+    p.vel.add(force).setMag(c);
     
     if(r <= rs+ 0.5){
      p.stopped = true; 
     }
-    
   }
 }

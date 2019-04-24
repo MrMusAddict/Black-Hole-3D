@@ -19,7 +19,7 @@ class Photon {
   }
 
   void show() {
-    strokeWeight(10);
+    strokeWeight(2);
     stroke(col);
     point(pos.x, pos.y, pos.z);
   }
@@ -30,7 +30,7 @@ class Photon {
       deltaV.mult(dt);
       pos.add(deltaV);
       deltaV.normalize().setMag(255);
-      col = color((int) deltaV.x, (int) deltaV.y, (int) deltaV.z);
+      col = color((int) 255 - deltaV.x, (int) 255 - deltaV.y, (int) 255 - deltaV.z);
     }
   }
 }
